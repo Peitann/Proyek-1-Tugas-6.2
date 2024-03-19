@@ -5,7 +5,7 @@ while True :
 
     print("Select an Option : \n")
     print("1. Enter new Expenses/Budget\n")
-    print("2. View Expenses/Budget Summary")
+    print("2. View Expenses/Budget Summary\n")
 
     choise = int(input())
 
@@ -16,3 +16,4 @@ while True :
     else :
         exit()
 
+1
