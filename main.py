@@ -1,4 +1,4 @@
-while True :
+while True:
     print("=============================")
     print("WELCOME TO MONEY TRACKER APP")
     print("=============================\n")
@@ -7,13 +7,12 @@ while True :
     print("1. Enter new Expenses/Budget\n")
     print("2. View Expenses/Budget Summary\n")
 
-    choise = int(input())
+    print("Choice Option =")
+    choice = int(input())
 
-    if choise == 1 :
+    if choice == 1:
         pass
-    elif choise == 2:
+    elif choice == 2:
         pass
-    else :
+    else:
         exit()
-
-1
