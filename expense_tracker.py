@@ -105,6 +105,7 @@ def get_user_expense():
 
 def set_budget():
     new_budget = float(input("Enter your new budget: $"))
+    save_budget(new_budget)
     return new_budget
 
 def load_budget():
