@@ -12,6 +12,9 @@ def main():
     
     # Load budget from file
     budget = load_budget()
+    
+    # Initialize expenses list
+    expenses = []
 
     while True:
         print("Select an option:")
@@ -76,7 +79,7 @@ def ask_for_another_operation(budget):
 def get_user_expense():
     print(f"🎯 Getting User Expense")
     expense_name = input("Enter expense name: ")
-    expense_amount = float(input("Enter expense amount: "))
+    expense_amount = float(input("Enter expense amount: Rp."))
     expense_date = input("Enter expense date (YYYY-MM-DD): ")
     expense_categories = [
         "🍔 Food",
@@ -104,7 +107,8 @@ def get_user_expense():
             print("Invalid category. Please try again!")
 
 def set_budget():
-    new_budget = float(input("Enter your new budget: $"))
+    new_budget = float(input("Enter your new budget: Rp."))
+    save_budget(new_budget)
     return new_budget
 
 def load_budget():
@@ -152,20 +156,17 @@ def summarize_expenses(expense_file_path, budget):
 
     print("Expenses By Category 📈:")
     for key, amount in amount_by_category.items():
-        print(f"  {key}: ${amount:.2f}")
+        print(f"  {key}: Rp.{amount:.2f}")
 
     total_spent = sum([x.amount for x in expenses])
-    print(f"💵 Total Spent: ${total_spent:.2f}")
+    print(f"💵 Total Spent: Rp.{total_spent:.2f}")
 
     remaining_budget = budget - total_spent
-    print(f"✅ Budget Remaining: ${remaining_budget:.2f}")
+    print(f"✅ Budget Remaining: Rp.{remaining_budget:.2f}")
 
     now = datetime.datetime.now()
     days_in_month = calendar.monthrange(now.year, now.month)[1]
     remaining_days = days_in_month - now.day
-
-    daily_budget = remaining_budget / remaining_days
-    print(f"👉 Budget Per Day: ${daily_budget:.2f}")
 
 
 if __name__ == "__main__":
