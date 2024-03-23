@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append("Main")
-from Main import main
+from expense_tracker import main
 
 def register():
     db = open("Login/database.txt", "r")
