@@ -81,7 +81,7 @@ def ask_for_another_operation(budget):
 def get_user_expense():
     print(f"🎯 Getting User Expense")
     expense_name = input("Enter expense name: ")
-    expense_amount = float(input("Enter expense amount: Rp."))
+    expense_amount = float(input("Enter expense amount: "))
     expense_date = input("Enter expense date (YYYY-MM-DD): ")
     expense_categories = [
         "🍔 Food",
@@ -110,7 +110,7 @@ def get_user_expense():
 
 
 def set_budget():
-    new_budget = float(input("Enter your new budget: Rp."))
+    new_budget = float(input("Enter your new budget: $"))
     return new_budget
 
 
@@ -135,7 +135,7 @@ def save_expense_to_file(expense: Expense, expense_file_path):
     print(f"🎯 Saving User Expense: {expense} to {expense_file_path}")
     with open(expense_file_path, "a", encoding='utf-8') as f:
         f.write(f"{expense.name},{expense.amount},{expense.category},{expense.date}\n")
-        
+
 def summarize_expenses(expense_file_path, budget):
     print(f"🎯 Summarizing User Expense")
     expenses: list[Expense] = []
