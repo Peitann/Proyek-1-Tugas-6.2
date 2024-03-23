@@ -1,4 +1,3 @@
-
 from expense import Expense
 import calendar
 import datetime
@@ -7,14 +6,12 @@ from recap import summarize_expenses_daily, summarize_expenses_monthly, summariz
 # Variabel global untuk menyimpan budget
 global_budget = 0.0
 
+
 def main():
     print("WELCOME TO MONEY TRACKER APP")
-    
+
     # Load budget from file
     budget = load_budget()
-    
-    # Initialize expenses list
-    expenses = []
 
     while True:
         print("Select an option:")
@@ -25,7 +22,8 @@ def main():
         option = input("Enter your choice: ")
 
         if option == "1":
-            add_expense(budget)
+            expense = add_expense(budget)
+            expenses.append(expense)  # Add expense to the list
         elif option == "2":
             print("Select a summary period:")
             print("1. Daily")
@@ -33,11 +31,11 @@ def main():
             print("3. Monthly")
             summary_option = input("Enter your choice: ")
             if summary_option == "1":
-                summarize_expenses_daily(budget)
+                summarize_expenses_daily(expenses, budget)
             elif summary_option == "2":
-                summarize_expenses_weekly(budget)
+                summarize_expenses_weekly(expenses, budget)
             elif summary_option == "3":
-                summarize_expenses_monthly(budget)
+                summarize_expenses_monthly(expenses, budget)
             else:
                 print("Invalid summary period. Please try again.")
         elif option == "3":
@@ -48,6 +46,7 @@ def main():
             break
         else:
             print("Invalid option. Please try again.")
+
 
 def add_expense(budget):
     print(f"🎯 Running Expense Tracker!")
@@ -61,6 +60,8 @@ def add_expense(budget):
 
     print("Expense added successfully!")
     ask_for_another_operation(budget)
+    return expense  # Return the expense object
+
 
 def ask_for_another_operation(budget):
     while True:
@@ -69,12 +70,10 @@ def ask_for_another_operation(budget):
             break
         elif choice == "no":
             print("Exiting Money Tracker App. Goodbye!")
-            # Summarize expenses
-            expense_file_path = "expenses.csv"
-            summarize_expenses(expense_file_path, budget)
-            exit()
+            exit()  # Exiting directly without summarizing expenses
         else:
             print("Invalid choice. Please enter 'yes' or 'no'.")
+
 
 def get_user_expense():
     print(f"🎯 Getting User Expense")
@@ -106,10 +105,11 @@ def get_user_expense():
         else:
             print("Invalid category. Please try again!")
 
+
 def set_budget():
-    new_budget = float(input("Enter your new budget: Rp."))
-    save_budget(new_budget)
+    new_budget = float(input("Enter your new budget: $"))
     return new_budget
+
 
 def load_budget():
     try:
@@ -121,10 +121,12 @@ def load_budget():
         print("No budget found. Setting initial budget.")
         return set_budget()
 
+
 def save_budget(budget):
     with open("budget.txt", "w") as file:
         file.write(str(budget))
         print("Budget saved successfully!")
+
 
 def save_expense_to_file(expense: Expense, expense_file_path):
     print(f"🎯 Saving User Expense: {expense} to {expense_file_path}")
@@ -156,17 +158,20 @@ def summarize_expenses(expense_file_path, budget):
 
     print("Expenses By Category 📈:")
     for key, amount in amount_by_category.items():
-        print(f"  {key}: Rp.{amount:.2f}")
+        print(f"  {key}: ${amount:.2f}")
 
     total_spent = sum([x.amount for x in expenses])
-    print(f"💵 Total Spent: Rp.{total_spent:.2f}")
+    print(f"💵 Total Spent: ${total_spent:.2f}")
 
     remaining_budget = budget - total_spent
-    print(f"✅ Budget Remaining: Rp.{remaining_budget:.2f}")
+    print(f"✅ Budget Remaining: ${remaining_budget:.2f}")
 
     now = datetime.datetime.now()
     days_in_month = calendar.monthrange(now.year, now.month)[1]
     remaining_days = days_in_month - now.day
+
+    daily_budget = remaining_budget / remaining_days
+    print(f"👉 Budget Per Day: ${daily_budget:.2f}")
 
 
 if __name__ == "__main__":
