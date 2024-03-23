@@ -1,7 +1,12 @@
+import sys
+sys.path.append("nyoba")
 from expense import Expense
 import calendar
 import datetime
-from nyoba.recap import summarize_expenses_daily, summarize_expenses_monthly, summarize_expenses_weekly
+from recap import summarize_expenses_daily, summarize_expenses_monthly, summarize_expenses_weekly
+
+# Variabel global untuk menyimpan budget
+global_budget = 0.0
 
 def main():
     print("WELCOME TO MONEY TRACKER APP")
