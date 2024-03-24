@@ -39,4 +39,4 @@ def summarize_expenses_monthly(expenses, budget):
     print(f"💵 Total Spent This Month: Rp.{total_spent:.2f}")
     print(f"✅ Budget Remaining This Month: Rp.{remaining_budget:.2f}")
     print(f"📅 Remaining Days This Month: {remaining_days}")
-    print(f"👉 Budget Per Day This Month: Rp.{monthly_budget:.2f}")
+    print(f"👉 Budget Per Day This Month: ${monthly_budget:.2f}")
