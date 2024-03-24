@@ -59,9 +59,7 @@ def main():
             print("Invalid option. Please try again.")
             
 def print_latest_budget(budget):
-    print()
     print(f"💸 Current Budget: ${budget:.2f} 💸")
-    
             
 def add_expense(budget, expenses):
     print(f"🎯 Running Expense Tracker!")
@@ -77,7 +75,6 @@ def add_expense(budget, expenses):
 
             print("Expense added successfully!")
             expenses.append(expense)  # Add expense to the list
-            budget -= expense.amount
             break
 
     ask_for_another_operation(budget)
@@ -88,7 +85,6 @@ def ask_for_another_operation(budget):
     while True:
         choice = input("Do you want to perform another operation? (yes/no): ").lower()
         if choice == "yes":
-            print_latest_budget(budget)
             break
         elif choice == "no":
             print("Exiting Money Tracker App. Goodbye!")
@@ -107,12 +103,11 @@ def is_valid_date(date_str):
 
 def get_user_expense(budget):
     print(f"🎯 Getting User Expense")
-    print()
     expense_name = input("Enter expense name: ")
     expense_amount = float(input("Enter expense amount: "))
 
     if expense_amount > budget:
-        print(f"⚠️ Warning: The spending '{expense_amount}' exceeds the budget '{budget}'. Please re-enter.")
+        print(f"⚠️ Warning: The expense amount '{expense_amount}' exceeds the budget '{budget}'. Please re-enter a lower amount.")
         return None
 
     expense_categories = [
@@ -124,7 +119,6 @@ def get_user_expense(budget):
     ]
 
     while True:
-        print()
         print("Select a category: ")
         for i, category_name in enumerate(expense_categories):
             print(f"  {i + 1}. {category_name}")
@@ -153,8 +147,8 @@ def get_user_expense(budget):
 
 def set_budget():
     new_budget = float(input("Enter additional budget: $"))
-    budget = load_budget()  # Load budget dari file
-    budget += new_budget  # Tambahkan budget baru
+    budget = load_budget()
+    budget += new_budget
     save_budget(budget)
     
     print(f"💸 Current Budget: $ {budget:.2f} 💸")
@@ -164,46 +158,39 @@ def set_budget():
 def load_budget():
     try:
         with open("budget.txt", "r") as file:
-            budget_str = file.read().strip()
-            if not budget_str:  # Jika file kosong, kembalikan total pengeluaran
-                print("No budget found. Setting initial budget.")
-                total_expenses = 0.0
-                with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
-                    for line in expenses_file:
-                        parts = line.strip().split(",")
-                        if len(parts) >= 2:
-                            total_expenses += float(parts[1])
-                return total_expenses
-            budget_from_file = float(budget_str)
+            budget = float(file.read())
             print("Budget loaded successfully!")
-            return budget_from_file
     except FileNotFoundError:
         print("No budget found. Setting initial budget.")
-        total_expenses = 0.0
-        with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
-            for line in expenses_file:
-                parts = line.strip().split(",")
-                if len(parts) >= 2:
-                    total_expenses += float(parts[1])
-        return total_expenses
+        budget = 0.0
+
+    # Calculate total expenses from expenses.csv
+    total_expenses = 0.0
+    with open("expenses.csv", "r", encoding='utf-8') as file:
+        for line in file:
+            parts = line.strip().split(",")
+            if len(parts) >= 2:
+                total_expenses += float(parts[1])
+
+    # Update budget by subtracting total expenses
+    budget -= total_expenses
+    return budget
 
 
 def save_budget(budget):
     with open("budget.txt", "w") as file:
         file.write(str(budget))
         print("Budget saved successfully!")
-        print()
 
 
 def save_expense_to_file(expense: Expense, expense_file_path):
-    print()
-    print(f"🎯 Saving User Expense: {expense}")
+    print(f"🎯 Saving User Expense: {expense} to {expense_file_path}")
     with open(expense_file_path, "a", encoding='utf-8') as f:
         f.write(f"{expense.name},{expense.amount},{expense.category},{expense.date}\n")
 
     # Update budget in budget.txt
-    budget = load_budget()  # Load budget dari file
-    budget -= expense.amount  # Kurangkan expense baru dari budget
+    budget = load_budget()
+    budget -= expense.amount  # Mengurangkan expense dari budget
     save_budget(budget)
 
 def summarize_expenses(expenses, budget, time_period):

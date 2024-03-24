@@ -12,14 +12,14 @@ def get_remaining_days_in_week():
     remaining_days = 6 - now.weekday()  # Assuming Monday is the first day of the week
     return remaining_days
 
-def summarize_expenses_daily(expenses, budget):
+def summarize_expenses_daily(expenses, budget, time_period):
     print("Daily Expense Summary 📅:")
     total_spent = sum(expense.amount for expense in expenses)
     remaining_budget = budget - total_spent
     print(f"💵 Total Spent Today: ${total_spent:.2f}")
     print(f"✅ Budget Remaining Today: ${remaining_budget:.2f}")
 
-def summarize_expenses_weekly(expenses, budget):
+def summarize_expenses_weekly(expenses, budget, time_period):
     print("Weekly Expense Summary 📆:")
     total_spent = sum(expense.amount for expense in expenses)
     remaining_budget = budget - total_spent
@@ -30,7 +30,7 @@ def summarize_expenses_weekly(expenses, budget):
     print(f"📅 Remaining Days This Week: {remaining_days}")
     print(f"👉 Budget Per Day This Week: ${weekly_budget:.2f}")
 
-def summarize_expenses_monthly(expenses, budget):
+def summarize_expenses_monthly(expenses, budget, time_period):
     print("Monthly Expense Summary 🗓️:")
     total_spent = sum(expense.amount for expense in expenses)
     remaining_budget = budget - total_spent
