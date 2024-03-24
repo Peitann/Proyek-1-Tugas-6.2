@@ -31,9 +31,6 @@ def main():
         if option == "1":
             expense = add_expense(budget, expenses)
             expenses.append(expense)
-            if expense is not None:
-                expenses.append(expense)  # Add expense to the list
-            
         elif option == "2":
             print("Select a summary period:")
             print("1. Daily")
@@ -75,13 +72,14 @@ def add_expense(budget, expenses):
             save_expense_to_file(expense, expense_file_path)
 
             print("Expense added successfully!")
-            expenses.append(expense)  # Add expense to the list
             budget -= expense.amount
-            global_budget = budget  # Memperbarui variabel global_budget
+            global_budget = budget
             break
 
     ask_for_another_operation(budget)
     return expense  # Return the expense object
+
+
 
 
 
