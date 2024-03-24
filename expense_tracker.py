@@ -9,33 +9,36 @@ global_budget = 0.0
 
 
 def main():
-    print("WELCOME TO MONEY TRACKER APP")
+    print("\033[33m" + "=============================================")
+    print("\033[33m" + "        WELCOME TO MONEY TRACKER APP         ")
+    print("\033[33m" + "=============================================")
 
     # Load budget from file
     budget = load_budget()
 
     # Initialize expenses list
     expenses = []
-    
-    # Latest Budget
+
+    # Display latest budget
+    print("\n\033[33m💰 Latest Budget Overview 💰")
     print_latest_budget(budget)
 
     while True:
-        print("Select an option:")
-        print("1. Add Expense")
-        print("2. Summarize Expenses")
-        print("3. Set Budget")
-        print("4. Quit")
-        option = input("Enter your choice: ")
+        print("\nWhat would you like to do?")
+        print("\033[36m" + "1. Add Expense 📝")
+        print("\033[32m" + "2. Summarize Expenses 📊")
+        print("\033[35m" + "3. Set Budget 💵")
+        print("\033[31m" + "4. Quit ❌")
+        option = input("\nEnter your choice: ")
 
         if option == "1":
             expense = add_expense(budget, expenses)
             expenses.append(expense)
         elif option == "2":
-            print("Select a summary period:")
-            print("1. Daily")
-            print("2. Weekly")
-            print("3. Monthly")
+            print("\nSelect a summary period:")
+            print("\033[33m" + "1. Daily 📅")
+            print("\033[33m" + "2. Weekly 🗓️")
+            print("\033[33m" + "3. Monthly 📆")
             summary_option = input("Enter your choice: ")
             if summary_option == "1":
                 summarize_expenses_daily(expenses, budget)
@@ -46,12 +49,12 @@ def main():
             else:
                 print("Invalid summary period. Please try again.")
         elif option == "3":
-            budget = set_budget()  # Perbarui budget setelah menambahkan budget baru
+            budget = set_budget()
         elif option == "4":
-            print("Exiting Money Tracker App. Goodbye!")
+            print("\nThank you for using Money Tracker App. Goodbye! 👋")
             break
         else:
-            print("Invalid option. Please try again.")
+            print("\nInvalid option. Please try again.")
             
 def print_latest_budget(budget):
     print()
