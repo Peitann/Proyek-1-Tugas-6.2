@@ -1,6 +1,7 @@
 from expense import Expense
 import calendar
 import datetime
+import json
 from recap import summarize_expenses_daily, summarize_expenses_monthly, summarize_expenses_weekly
 
 # Variabel global untuk menyimpan budget
@@ -146,8 +147,7 @@ def get_user_expense(budget):
             return new_expense
         else:
             print("Invalid category. Please try again!")
-
-    return new_expense
+            return new_expense
 
 def set_budget():
     new_budget = float(input("Enter additional budget: Rp."))
@@ -187,10 +187,12 @@ def load_budget():
 
 
 def save_budget(budget):
-    with open("budget.txt", "w") as file:
-        file.write(str(budget))
-        print("Budget saved successfully!")
-        print()
+    try:
+        with open("budget.txt", "w", encoding="utf-8") as file:
+            json.dump(budget, file, indent=4)
+            print("Budget saved successfully!")
+    except Exception as e:
+        print(f"Error saving budget: {e}")
 
 def save_expense_to_file(expense: Expense, expense_file_path):
     print()
