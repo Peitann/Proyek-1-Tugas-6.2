@@ -164,15 +164,28 @@ def set_budget():
 def load_budget():
     try:
         with open("budget.txt", "r") as file:
-            budget = float(file.read().strip())
+            budget_str = file.read().strip()
+            if not budget_str:  # Jika file kosong, kembalikan total pengeluaran
+                print("No budget found. Setting initial budget.")
+                total_expenses = 0.0
+                with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
+                    for line in expenses_file:
+                        parts = line.strip().split(",")
+                        if len(parts) >= 2:
+                            total_expenses += float(parts[1])
+                return total_expenses
+            budget_from_file = float(budget_str)
             print("Budget loaded successfully!")
-            return budget
+            return budget_from_file
     except FileNotFoundError:
         print("No budget found. Setting initial budget.")
-        return set_budget()
-    except ValueError:
-        print("Invalid budget format. Setting initial budget.")
-        return set_budget()
+        total_expenses = 0.0
+        with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
+            for line in expenses_file:
+                parts = line.strip().split(",")
+                if len(parts) >= 2:
+                    total_expenses += float(parts[1])
+        return total_expenses
 
 
 def save_budget(budget):
