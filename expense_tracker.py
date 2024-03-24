@@ -37,7 +37,7 @@ def main():
         elif option == "2":
             print("\nSelect a summary period:")
             print("\033[33m" + "1. Daily 📅")
-            print("\033[33m" + "2. Weekly 🗓️")
+            print("\033[33m" + "2. Weekly 🗓")
             print("\033[33m" + "3. Monthly 📆")
             summary_option = input("Enter your choice: ")
             if summary_option == "1":
@@ -54,7 +54,7 @@ def main():
             print("\nThank you for using Money Tracker App. Goodbye! 👋")
             break
         else:
-            print("\nInvalid option. Please try again.")
+            print("\nInvalid option. Please try again.")
             
 def print_latest_budget(budget):
     print()
