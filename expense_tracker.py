@@ -24,7 +24,7 @@ def main():
         print("Select an option:")
         print("1. Add Expense")
         print("2. Summarize Expenses")
-        print("3. Set Budget")
+        print("3. Add Budget")
         print("4. Quit")
         option = input("Enter your choice: ")
 
