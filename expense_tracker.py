@@ -1,6 +1,7 @@
 from expense import Expense
 import calendar
 import datetime
+import json
 from recap import summarize_expenses_daily, summarize_expenses_monthly, summarize_expenses_weekly
 
 # Variabel global untuk menyimpan budget
@@ -148,8 +149,7 @@ def get_user_expense(budget):
             return new_expense
         else:
             print("Invalid category. Please try again!")
-
-    return new_expense
+            return new_expense
 
 def set_budget():
     new_budget = float(input("Enter additional budget: Rp."))
@@ -164,35 +164,24 @@ def set_budget():
 def load_budget():
     try:
         with open("budget.txt", "r") as file:
-            budget_str = file.read().strip()
-            if not budget_str:  # Jika file kosong, kembalikan total pengeluaran
-                print("No budget found. Setting initial budget.")
-                total_expenses = 0.0
-                with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
-                    for line in expenses_file:
-                        parts = line.strip().split(",")
-                        if len(parts) >= 2:
-                            total_expenses += float(parts[1])
-                return total_expenses
-            budget_from_file = float(budget_str)
+            budget = float(file.read().strip())
             print("Budget loaded successfully!")
-            return budget_from_file
+            return budget
     except FileNotFoundError:
         print("No budget found. Setting initial budget.")
-        total_expenses = 0.0
-        with open("expenses.csv", "r", encoding='utf-8') as expenses_file:
-            for line in expenses_file:
-                parts = line.strip().split(",")
-                if len(parts) >= 2:
-                    total_expenses += float(parts[1])
-        return total_expenses
+        return set_budget()
+    except ValueError:
+        print("Invalid budget format. Setting initial budget.")
+        return set_budget()
 
 
 def save_budget(budget):
-    with open("budget.txt", "w") as file:
-        file.write(str(budget))
-        print("Budget saved successfully!")
-        print()
+    try:
+        with open("budget.txt", "w", encoding="utf-8") as file:
+            json.dump(budget, file, indent=4)
+            print("Budget saved successfully!")
+    except Exception as e:
+        print(f"Error saving budget: {e}")
 
 def save_expense_to_file(expense: Expense, expense_file_path):
     print()
